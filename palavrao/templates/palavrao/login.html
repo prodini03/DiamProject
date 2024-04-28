@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends "palavrao/login.html" %}
+
+{% block banner %}
+
+<nav class="topnav">
+<a href="{% url 'palavrao:login' %}">
+           Voltar ao inicio
+       </a>
+</nav>
+
+{% endblock %}
+
+{% block conteudo %}
+
+<br>
+<form action="{% url 'palavrao:login' %}" method="post">
+    {% csrf_token %}
+    Username: <input type="text" name="username" required><br>
+    <br>
+    Password: <input type="text" name="password" required><br>
+<br>
+    <input type="submit" value="Login" />
+</form>
+
+{% endblock %}
+
+</body>
+</html>
