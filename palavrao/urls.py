@@ -3,5 +3,8 @@ from . import views
 
 app_name = 'palavrao'
 
-path('login',views.login,name='login')
-
+urlpatterns = [
+    path('login', views.login, name='login'),
+    path("", views.index, name='index'),
+    path('errologin',views.errologin, name='errologin'),
+]
