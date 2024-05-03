@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    {% extends "palavrao/login.html" %}
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+{% block menu %}
 <nav class="topnav">
-<a href="{% url 'palavrao:index' %}">
+<a href="{% url 'palavrao:login' %}">
            Voltar ao inicio
        </a>
 </nav>
+{% endblock %}
 
+{% block content %}
 <strong>Enganaste-te a escrever o teu username e/ou palavra-passe</strong>
+{% endblock %}
+
 </body>
 </html>

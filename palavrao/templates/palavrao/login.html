@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {%  load static %}
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'palavrao/style.css' %}">
     <title>Title</title>
 </head>
 <body>
 
-<nav class="topnav">
+<h1 style="text-align: center;"><img src="{% static 'media/logo.png' %}" width=600" height="150" alt="Palavrão"></h1>
+
+{% block menu %}
+	<nav class="topnav">
 <a href="{% url 'palavrao:index' %}">
            Voltar ao inicio
        </a>
 </nav>
+{% endblock %}
 
-
-<br>
+{% block content %}
+	<br>
 <form action="{% url 'palavrao:login' %}" method="post">
     {% csrf_token %}
     Username: <input type="text" name="username" required><br>
@@ -22,6 +28,15 @@
 <br>
     <input type="submit" value="Login" />
 </form>
+{% endblock %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{% static 'script.js' %}"></script>
 
 </body>
 </html>

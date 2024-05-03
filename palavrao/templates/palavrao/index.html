@@ -1,12 +1,14 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+
+    {% extends "palavrao/login.html" %}
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'palavrao/style.css' %}">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <link
     rel="stylesheet"
@@ -16,13 +18,15 @@
 
 <body>
 
-    <h1> Palavrao </h1>
-
-<nav class="topnav">
+{% block menu %}
+	<nav class="topnav">
     <a href="{% url 'palavrao:login' %}">
         Login
     </a>
 </nav>
+{% endblock %}
+
+{% block content %}
 
     <div id="game-board">
 
@@ -65,12 +69,7 @@
             <button class="keyboard-button">Enter</button>
         </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{% static 'script.js' %}"></script>
+{% endblock %}
+
 </body>
 </html>
