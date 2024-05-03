@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
     {%  load static %}
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'palavrao/style.css' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
 </head>
 <body>
 
@@ -25,24 +25,16 @@
 {% endblock %}
 
 {% block content %}
-	<br>
-<form action="{% url 'palavrao:login' %}" method="post">
-    {% csrf_token %}
-    Username: <input type="text" name="username" required><br>
     <br>
-    Password: <input type="password" name="password" required><br>
-<br>
-    <input type="submit" value="Login" />
-</form>
+    <form action="{% url 'palavrao:login' %}" method="post">
+        {% csrf_token %}
+        Username: <input type="text" name="username" required><br>
+        <br>
+        Password: <input type="password" name="password" required><br>
+        <br>
+        <input type="submit" value="Login" />
+    </form>
 {% endblock %}
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script
-src="https://code.jquery.com/jquery-3.6.0.min.js"
-integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="{% static 'script.js' %}"></script>
 
 </body>
 </html>
