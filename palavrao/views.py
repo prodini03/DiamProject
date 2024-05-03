@@ -15,7 +15,7 @@ def index(request):
     return render(request, 'palavrao/index.html')
 
 
-def login(request):
+def loginview(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')

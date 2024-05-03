@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-
     {% extends "palavrao/login.html" %}
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
-    <link
-    rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
 </head>
 
 <body>
-
 {% block menu %}
 	<nav class="topnav">
     <a href="{% url 'palavrao:login' %}">
@@ -27,49 +18,96 @@
 {% endblock %}
 
 {% block content %}
+    <main>
+        <section class="board-game">
+            <div class="row row-1">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+            <div class="row row-2">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+            <div class="row row-3">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+            <div class="row row-4">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+            <div class="row row-5">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+            <div class="row row-6">
+                <div class="letter letter-1"></div>
+                <div class="letter letter-2"></div>
+                <div class="letter letter-3"></div>
+                <div class="letter letter-4"></div>
+                <div class="letter letter-5"></div>
+            </div>
+        </section>
+        <section class="keyboard">
+            <div class="row row-1">
+                <button type="button" class="letter letter-q" value="q">Q</button>
+                <button type="button" class="letter letter-w" value="w">W</button>
+                <button type="button" class="letter letter-e" value="e">E</button>
+                <button type="button" class="letter letter-r" value="r">R</button>
+                <button type="button" class="letter letter-t" value="t">T</button>
+                <button type="button" class="letter letter-y" value="y">Y</button>
+                <button type="button" class="letter letter-u" value="u">U</button>
+                <button type="button" class="letter letter-i" value="i">I</button>
+                <button type="button" class="letter letter-o" value="o">O</button>
+                <button type="button" class="letter letter-p" value="p">P</button>
+            </div>
 
-    <div id="game-board">
+            <div class="row row-2">
+                <button type="button" class="letter letter-a" value="a">A</button>
+                <button type="button" class="letter letter-s" value="s">S</button>
+                <button type="button" class="letter letter-d" value="d">D</button>
+                <button type="button" class="letter letter-f" value="f">F</button>
+                <button type="button" class="letter letter-g" value="g">G</button>
+                <button type="button" class="letter letter-h" value="h">H</button>
+                <button type="button" class="letter letter-j" value="j">J</button>
+                <button type="button" class="letter letter-k" value="k">K</button>
+                <button type="button" class="letter letter-l" value="l">L</button>
+            </div>
 
-    </div>
-
-
-    <div id="keyboard-cont">
-        <div class="first-row">
-            <button class="keyboard-button">q</button>
-            <button class="keyboard-button">w</button>
-            <button class="keyboard-button">e</button>
-            <button class="keyboard-button">r</button>
-            <button class="keyboard-button">t</button>
-            <button class="keyboard-button">y</button>
-            <button class="keyboard-button">u</button>
-            <button class="keyboard-button">i</button>
-            <button class="keyboard-button">o</button>
-            <button class="keyboard-button">p</button>
-        </div>
-        <div class="second-row">
-            <button class="keyboard-button">a</button>
-            <button class="keyboard-button">s</button>
-            <button class="keyboard-button">d</button>
-            <button class="keyboard-button">f</button>
-            <button class="keyboard-button">g</button>
-            <button class="keyboard-button">h</button>
-            <button class="keyboard-button">j</button>
-            <button class="keyboard-button">k</button>
-            <button class="keyboard-button">l</button>
-        </div>
-        <div class="third-row">
-            <button class="keyboard-button">Del</button>
-            <button class="keyboard-button">z</button>
-            <button class="keyboard-button">x</button>
-            <button class="keyboard-button">c</button>
-            <button class="keyboard-button">v</button>
-            <button class="keyboard-button">b</button>
-            <button class="keyboard-button">n</button>
-            <button class="keyboard-button">m</button>
-            <button class="keyboard-button">Enter</button>
-        </div>
-    </div>
+            <div class="row row-3">
+                <button type="button" class="action enter">ENTER</button>
+                <button type="button" class="letter letter-z" value="z">Z</button>
+                <button type="button" class="letter letter-x" value="x">X</button>
+                <button type="button" class="letter letter-c" value="c">C</button>
+                <button type="button" class="letter letter-v" value="v">V</button>
+                <button type="button" class="letter letter-b" value="b">B</button>
+                <button type="button" class="letter letter-n" value="n">N</button>
+                <button type="button" class="letter letter-m" value="m">M</button>
+                <button type="button" class="action erase">
+                </button>
+            </div>
+        </section>
+    </main>
+    {% load static %}
+    <script src="{% static 'script.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 {% endblock %}
+
 
 </body>
 </html>
