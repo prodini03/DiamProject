@@ -8,11 +8,9 @@ TODO:
 
 -quando acabar jogo, aparecer botao pra ir aos comentarios
 
--criar conta
-
 -pagina de dados pessoais
 
--foto de perfil
+-foto de perfil -> anonimo, default perfil, perfil personalizado
 
 -entrar como anonimo
 
