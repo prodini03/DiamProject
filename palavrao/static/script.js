@@ -302,7 +302,7 @@ const onKeydown = (game) => {
 }
 
 const loadWords = async () => {
-    return fetch('./resources/assets/json/database.json')
+    return fetch('static/words.json')
                     .then((response) => response.json())
                     .then(({ words }) => words)
                     .catch(() => [])
