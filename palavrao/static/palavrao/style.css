@@ -58,17 +58,19 @@ h1 {
     --keyboard-gray-dark: #585858;
 }
 
+/**
 * {
-    border: 0;
-    color: var(--white);
+    border-style: groove;;
+    color: #000000;
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+**/
 
 body {
-    background-color: var(--white);
+    background-color: #fff;
 }
 
 main {
@@ -81,6 +83,7 @@ main {
 .board-game {
     margin: 00px auto 0;
     width: 330px;
+
 }
 
 .board-game .row {
@@ -93,6 +96,8 @@ main {
 
 .board-game .letter {
     border: 1px solid var(--border-color);
+    color: #000;
+
 }
 
 .board-game .letter {
@@ -102,12 +107,14 @@ main {
     font-size: 22px;
     text-transform: capitalize;
     font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Keyboard */
 
 .keyboard {
     margin: 50px auto 0;
+
 }
 
 .keyboard .row {
@@ -116,6 +123,7 @@ main {
     gap: 5px;
     margin-bottom: 5px;
 }
+
 
 .keyboard .letter,
 .keyboard .action {
@@ -128,6 +136,8 @@ main {
     justify-content: center;
     transition: filter 0.2s;
     width: 43px;
+    border-style: hidden;
+    color: #dddddd;
 }
 
 .keyboard .letter:hover,

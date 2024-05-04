@@ -21,3 +21,7 @@ class Comment(models.Model):
     puzzle_id = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+
+class Likes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
