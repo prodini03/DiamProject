@@ -11,11 +11,16 @@
 
 <body>
 {% block menu %}
-<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+         style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
         <a href="javascript:void(0)" onclick="w3_close()"
-        class="w3-bar-item w3-button">Close Menu</a>
-        <a href="{% url 'palavrao:login' %}"
-        class="w3-bar-item w3-button">Login</a>
+           class="w3-bar-item w3-button">Close Menu</a>
+        {% if verificar %}
+            <a href="{% url 'palavrao:dados_pessoais' %}"
+               class="w3-bar-item w3-button">Dados Pessoais</a>
+        {% endif %}
+        <a href="{% url 'palavrao:logoutview' %}"
+           class="w3-bar-item w3-button">Logout</a>
     </nav>
     <div class="w3-top">
         <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
@@ -25,6 +30,18 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if not verificar %}
+        <img src="{% static 'media/anonimo.png' %}" id="anonimo" width="150" height="150" alt="Imagem de perfil"
+             style="position: absolute; top: 10px; right: 10px;">
+    {% elif imagem %}
+        <img src="{% static 'media/' %}{{ request.user.id }}.jpg" id="pfp" width="150" height="150"
+             alt="Imagem de perfil" style="position: absolute; top: 10px; right: 10px;">
+    {% else %}
+        <img src="{% static 'media/default.png' %}" id="default" width="150" height="150" alt="Imagem de perfil"
+             style="position: absolute; top: 10px; right: 10px;">
+    {% endif %}
+
     <main>
         <section class="board-game">
             <div class="row row-1">
@@ -109,7 +126,7 @@
                 </button>
             </div>
         </section>
-    <section class="play-again">
+        <section class="play-again">
             <button type="button" class="btn-play-again">JOGAR NOVAMENTE</button>
         </section>
     </main>

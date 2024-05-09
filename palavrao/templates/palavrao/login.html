@@ -44,18 +44,19 @@
     </div>
 {% endblock %}
 
-{% block content %}
-    <br>
-    <form action="{% url 'palavrao:login' %}" method="post">
-        {% csrf_token %}
-        Username: <input type="text" name="username" required><br>
+<div style="text-align: center;">
+    {% block content %}
         <br>
-        Password: <input type="password" name="password" required><br>
-        <br>
-        <input type="submit" value="Login"/>
-    </form>
-
-{% endblock %}
+        <form action="{% url 'palavrao:login' %}" method="post">
+            {% csrf_token %}
+            Username: <input type="text" name="username" required><br>
+            <br>
+            Password: <input type="password" name="password" required><br>
+            <br>
+            <input type="submit" value="Login"/>
+        </form>
+    {% endblock %}
+</div>
 
 <script>
     function w3_open() {

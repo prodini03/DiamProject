@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends "palavrao/login.html" %}
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block menu %}
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+         style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()"
+           class="w3-bar-item w3-button">Close Menu</a>
+        <a href="{% url 'palavrao:login' %}"
+           class="w3-bar-item w3-button">Confirmar logout</a>
+
+    </nav>
+    <div class="w3-top">
+        <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+            <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+Logout concluido. XD! Volta brevemente!!
+    <p>Para confirmar logout por favor carregue no botão de confirmar logout no menu.</p>
+{% endblock %}
+
+</body>
+</html>

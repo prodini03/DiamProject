@@ -1,4 +1,7 @@
+import os
+
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.urls import reverse
@@ -14,8 +17,9 @@ from palavrao.models import Client
 # Create your views here.
 
 def index(request):
-    return render(request, 'palavrao/index.html')
-
+    imagem = existe_imagem_perfil(request.user.id)
+    verificar = verificar_login(request)
+    return render(request, 'palavrao/index.html',{'imagem':imagem,'verificar':verificar})
 
 def loginview(request):
     if request.method == 'POST':
@@ -49,3 +53,44 @@ def criarconta(request):
             return render(request, 'palavrao/errologin.html', {'error_message': 'Username já existe'})
     else:
         return render(request, 'palavrao/criarconta.html')
+
+def fazer_upload(request):
+    imagem = existe_imagem_perfil(request.user.id)
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(str(request.user.id)+".jpg", myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'palavrao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url, "imagem": imagem})
+    return render(request,'palavrao/fazer_upload.html', {"imagem": imagem})
+
+
+def existe_imagem_perfil(user_id):
+    fs = FileSystemStorage()
+    caminho_imagem = fs.path(os.path.join(f'{str(user_id)}.jpg'))
+    print(caminho_imagem)
+    return os.path.exists(caminho_imagem)
+
+def dados_pessoais(request):
+    user = request.user
+    client = user.client
+    imagem = existe_imagem_perfil(request.user.id)
+    context = {
+        'user': user,
+        'client': client,
+        'imagem': imagem
+    }
+    return render(request, 'palavrao/dados_pessoais.html', context)
+
+
+def verificar_login(request):
+    if request.user.is_authenticated:
+        # O usuário está logado
+        return True
+    else:
+        # O usuário não está logado, redirecione para a página de login
+        return False
+
+def logoutview(request):
+    logout(request)
+    return render(request, 'palavrao/logoutview.html')
