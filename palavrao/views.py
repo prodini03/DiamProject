@@ -13,9 +13,6 @@ from django.contrib.auth import authenticate
 
 from palavrao.models import Client
 
-
-# Create your views here.
-
 def index(request):
     imagem = existe_imagem_perfil(request.user.id)
     verificar = verificar_login(request)
