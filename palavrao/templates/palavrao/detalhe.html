@@ -48,7 +48,7 @@
     {% if is_superuser %}
         <form action="{% url 'palavrao:apagarcomentario' comment.id %}" method="post">
             {% csrf_token %}
-            <button class="button" type="submit" style="text-align: center">Apagar Comentário</button>
+            <button class="button" type="submit" style="text-align: center">APAGAR COMENTÁRIO</button>
         </form>
     {% endif %}
 {% endblock %}
