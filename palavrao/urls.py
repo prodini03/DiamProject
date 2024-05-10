@@ -13,4 +13,7 @@ urlpatterns = [
     path('logoutview', views.logoutview, name='logoutview'),
     path('comentarios', views.comentarios, name='comentarios'),
     path('add_comment', views.add_comment, name='add_comment'),
+    path('detalhe/<int:comentario_id>', views.detalhe, name='detalhe'),
+    path('confirmardeletecomment/<int:comentario_id>', views.confirmardeletecomment, name='confirmardeletecomment'),
+    path('apagarcomentario/<int:comentario_id>', views.apagarcomentario, name='apagarcomentario'),
 ]

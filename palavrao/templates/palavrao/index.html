@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
 {% block menu %}
     <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
          style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
@@ -18,9 +19,7 @@
         {% if verificar %}
             <a href="{% url 'palavrao:dados_pessoais' %}"
                class="w3-bar-item w3-button">Dados Pessoais</a>
-                        <a href="{% url 'palavrao:comentarios' %}"
-               class="w3-bar-item w3-button">Dados Pessoais</a>
-                        <a href="{% url 'palavrao:comentarios' %}"
+            <a href="{% url 'palavrao:comentarios' %}"
                class="w3-bar-item w3-button">Comentarios</a>
         {% endif %}
         <a href="{% url 'palavrao:logoutview' %}"

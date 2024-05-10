@@ -10,6 +10,8 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import authenticate
+import random
+from django.contrib.auth.decorators import login_required
 
 from palavrao.models import Client, Comment
 
@@ -51,7 +53,7 @@ def criarconta(request):
             return render(request, 'palavrao/errologin.html', {'error_message': 'Username já existe'})
     else:
         return render(request, 'palavrao/criarconta.html')
-
+@login_required(login_url='/palavrao/loginview')
 def fazer_upload(request):
     imagem = existe_imagem_perfil(request.user.id)
     if request.method == 'POST' and request.FILES['myfile']:
@@ -68,7 +70,7 @@ def existe_imagem_perfil(user_id):
     caminho_imagem = fs.path(os.path.join(f'{str(user_id)}.jpg'))
     print(caminho_imagem)
     return os.path.exists(caminho_imagem)
-
+@login_required(login_url='/palavrao/loginview')
 def dados_pessoais(request):
     user = request.user
     client = user.client
@@ -92,19 +94,44 @@ def verificar_login(request):
 def logoutview(request):
     logout(request)
     return render(request, 'palavrao/logoutview.html')
-
+@login_required(login_url='/palavrao/loginview')
 def add_comment(request):
+    imagem = existe_imagem_perfil(request.user.id)
     if request.method == 'POST':
         text = request.POST.get('text')
         # Supondo que você já tenha o usuário autenticado
         user = request.user.client  # Obtém o cliente associado ao usuário
         comment = Comment.objects.create(user=user, text=text)
         comment.save()
+
         comments = Comment.objects.all()
         return comentarios(request) # Redireciona para a página de comentários após adicionar o comentário
-    return render(request, 'palavrao/add_comment.html')  # Renderiza o formulário de adição de comentário se não for uma solicitação POST
-
+    return render(request, 'palavrao/add_comment.html',{'imagem':imagem}) # Renderiza o formulário de adição de comentário se não for uma solicitação POST
+@login_required(login_url='/palavrao/loginview')
 def comentarios(request):
     comments = Comment.objects.all()
-    # Passe os comentários para o contexto do template
-    return render(request, 'palavrao/comentarios.html', {'comments': comments})
+    imagem = existe_imagem_perfil(request.user.id)
+    for comment in comments:
+        comment.size = random.randint(15, 35)
+    return render(request, 'palavrao/comentarios.html', {'comments': comments, 'imagem': imagem})
+@login_required(login_url='/palavrao/loginview')
+def detalhe(request, comentario_id):
+    comment = get_object_or_404(Comment, pk=comentario_id)
+    is_superuser = request.user.is_authenticated and request.user.is_superuser
+    imagem = existe_imagem_perfil(request.user.id)
+    return render(request, 'palavrao/detalhe.html',{'comment':comment,'is_superuser':is_superuser, 'imagem': imagem})
+
+def check_superuser(user):
+    return user.is_superuser
+
+@user_passes_test(check_superuser, login_url='/palavrao/loginview')
+def apagarcomentario(request, comentario_id):
+    comment = get_object_or_404(Comment, pk=comentario_id)
+    imagem = existe_imagem_perfil(request.user.id)
+    return render(request, 'palavrao/apagarcomentario.html',{'comment': comment,'imagem':imagem})
+
+@user_passes_test(check_superuser, login_url='/palavrao/loginview')
+def confirmardeletecomment(request, comentario_id):
+    comment = get_object_or_404(Comment, pk=comentario_id)
+    comment.delete()
+    return comentarios(request)

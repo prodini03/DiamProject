@@ -5,7 +5,6 @@
     {% load static %}
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'style_comment.css' %}">
 </head>
 <body>
 
@@ -30,6 +29,18 @@
 
 
 {% block content %}
+    {% if imagem %}
+
+        <img src="{% static 'media/' %}{{ request.user.id }}.jpg" id="pfp" width="150" height="150"
+             alt="Imagem de perfil" style="position: absolute; top: 10px; right: 10px;">
+
+    {% else %}
+
+        <img src="{% static 'media/default.png' %}" id="default" width="150" height="150" alt="Imagem de perfil"
+             style="position: absolute; top: 10px; right: 10px;">
+
+    {% endif %}
+
     <h1>Adicionar Comentário</h1>
     <form action="{% url 'palavrao:add_comment' %}" method="post">
         {% csrf_token %}
