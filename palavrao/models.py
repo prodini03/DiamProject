@@ -18,7 +18,6 @@ class Tentativa(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE)
-    puzzle_id = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
     text = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
 

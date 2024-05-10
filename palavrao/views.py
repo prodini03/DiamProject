@@ -11,7 +11,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import authenticate
 
-from palavrao.models import Client
+from palavrao.models import Client, Comment
+
 
 def index(request):
     imagem = existe_imagem_perfil(request.user.id)
@@ -91,3 +92,19 @@ def verificar_login(request):
 def logoutview(request):
     logout(request)
     return render(request, 'palavrao/logoutview.html')
+
+def add_comment(request):
+    if request.method == 'POST':
+        text = request.POST.get('text')
+        # Supondo que você já tenha o usuário autenticado
+        user = request.user.client  # Obtém o cliente associado ao usuário
+        comment = Comment.objects.create(user=user, text=text)
+        comment.save()
+        comments = Comment.objects.all()
+        return comentarios(request) # Redireciona para a página de comentários após adicionar o comentário
+    return render(request, 'palavrao/add_comment.html')  # Renderiza o formulário de adição de comentário se não for uma solicitação POST
+
+def comentarios(request):
+    comments = Comment.objects.all()
+    # Passe os comentários para o contexto do template
+    return render(request, 'palavrao/comentarios.html', {'comments': comments})

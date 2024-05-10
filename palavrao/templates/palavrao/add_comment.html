@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends "palavrao/login.html" %}
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style_comment.css' %}">
+</head>
+<body>
+
+{% block menu %}
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+         style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()"
+           class="w3-bar-item w3-button">Close Menu</a>
+        <a href="{% url 'palavrao:dados_pessoais' %}"
+           class="w3-bar-item w3-button">Dados Pessoais</a>
+        <a href="{% url 'palavrao:index' %}"
+           class="w3-bar-item w3-button">Jogar ao Palavrão</a>
+        <a href="{% url 'palavrao:logoutview' %}"
+           class="w3-bar-item w3-button">Logout</a>
+    </nav>
+    <div class="w3-top">
+        <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+            <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <h1>Adicionar Comentário</h1>
+    <form action="{% url 'palavrao:add_comment' %}" method="post">
+        {% csrf_token %}
+        <label for="text">Comentário:</label><br>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Adicionar Comentário">
+    </form>
+{% endblock %}
+</body>
+</html>
