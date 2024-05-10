@@ -56,12 +56,12 @@ const showNotification = ({backgroundColor, message}) => {
 }
 
 const showPlayAgainButton = () => {
-    const buttonPlayAgain = document.querySelector('.play-again .btn-play-again')
+    const buttonPlayAgain = document.querySelector('.play-again .btn')
     buttonPlayAgain.style.display = 'block'
 }
 
 const hidePlayAgainButton = () => {
-    const buttonPlayAgain = document.querySelector('.btn-play-again')
+    const buttonPlayAgain = document.querySelector('.btn')
     buttonPlayAgain.style.display = 'none'
 }
 
@@ -293,7 +293,7 @@ const onLetterButtonPressed = (game) => {
 }
 
 const onPlayAgainButtonPressed = (game) => {
-    const buttonPlayAgain = document.querySelector('.btn-play-again')
+    const buttonPlayAgain = document.querySelector('.btn')
 
     buttonPlayAgain.addEventListener('click', () => {
         resetInitialGame(game)
@@ -308,7 +308,7 @@ const onKeydown = (game) => {
 }
 
 const loadWords = async () => {
-    return fetch('static/words.json')
+    return fetch('/static/words.json')
         .then((response) => response.json())
         .then(({words}) => words)
         .catch(() => [])

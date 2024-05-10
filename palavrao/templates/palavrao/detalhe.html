@@ -36,19 +36,20 @@
     </nav>
     <div class="w3-top">
         <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-            <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+            <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()" style="background-color: #fdfaf2">☰</div>
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
-<h1>{{ comment.text }}</h1>
+    <h1>{{ comment.text }}</h1>
     <h2>{{ comment.created_at }}</h2>
-   {% if is_superuser %}
-<form action="{% url 'palavrao:apagarcomentario' comment.id %}" method="post">
-    {% csrf_token %}
-    <button class="button" type="submit" style="text-align: center">Apagar Comentário</button>
-</form>
+    <br>
+    {% if is_superuser %}
+        <form action="{% url 'palavrao:apagarcomentario' comment.id %}" method="post">
+            {% csrf_token %}
+            <button class="button" type="submit" style="text-align: center">Apagar Comentário</button>
+        </form>
     {% endif %}
 {% endblock %}
 
