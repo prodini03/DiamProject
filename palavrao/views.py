@@ -13,13 +13,15 @@ from django.contrib.auth import authenticate
 import random
 from django.contrib.auth.decorators import login_required
 
-from palavrao.models import Client, Comment
+from palavrao.models import Client, Comment, Likes
+from django.http import JsonResponse
 
 
 def index(request):
     imagem = existe_imagem_perfil(request.user.id)
     verificar = verificar_login(request)
-    return render(request, 'palavrao/index.html',{'imagem':imagem,'verificar':verificar})
+    return render(request, 'palavrao/index.html', {'imagem': imagem, 'verificar': verificar})
+
 
 def loginview(request):
     if request.method == 'POST':
@@ -30,9 +32,11 @@ def loginview(request):
             login(request, user)
             return index(request)
         else:
-            return render(request, 'palavrao/errologin.html',{'error_message': 'Enganaste-te no username ou na password'})
+            return render(request, 'palavrao/errologin.html',
+                          {'error_message': 'Enganaste-te no username ou na password'})
     else:
         return render(request, 'palavrao/login.html')
+
 
 def errologin(request):
     render(request, 'palavrao/errologin.html')
@@ -53,16 +57,18 @@ def criarconta(request):
             return render(request, 'palavrao/errologin.html', {'error_message': 'Username já existe'})
     else:
         return render(request, 'palavrao/criarconta.html')
+
+
 @login_required(login_url='/palavrao/loginview')
 def fazer_upload(request):
     imagem = existe_imagem_perfil(request.user.id)
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
-        filename = fs.save(str(request.user.id)+".jpg", myfile)
+        filename = fs.save(str(request.user.id) + ".jpg", myfile)
         uploaded_file_url = fs.url(filename)
         return render(request, 'palavrao/fazer_upload.html', {'uploaded_file_url': uploaded_file_url, "imagem": imagem})
-    return render(request,'palavrao/fazer_upload.html', {"imagem": imagem})
+    return render(request, 'palavrao/fazer_upload.html', {"imagem": imagem})
 
 
 def existe_imagem_perfil(user_id):
@@ -70,6 +76,8 @@ def existe_imagem_perfil(user_id):
     caminho_imagem = fs.path(os.path.join(f'{str(user_id)}.jpg'))
     print(caminho_imagem)
     return os.path.exists(caminho_imagem)
+
+
 @login_required(login_url='/palavrao/loginview')
 def dados_pessoais(request):
     user = request.user
@@ -91,9 +99,12 @@ def verificar_login(request):
         # O usuário não está logado, redirecione para a página de login
         return False
 
+
 def logoutview(request):
     logout(request)
     return render(request, 'palavrao/logoutview.html')
+
+
 @login_required(login_url='/palavrao/loginview')
 def add_comment(request):
     imagem = existe_imagem_perfil(request.user.id)
@@ -105,8 +116,11 @@ def add_comment(request):
         comment.save()
 
         comments = Comment.objects.all()
-        return comentarios(request) # Redireciona para a página de comentários após adicionar o comentário
-    return render(request, 'palavrao/add_comment.html',{'imagem':imagem}) # Renderiza o formulário de adição de comentário se não for uma solicitação POST
+        return comentarios(request)  # Redireciona para a página de comentários após adicionar o comentário
+    return render(request, 'palavrao/add_comment.html',
+                  {'imagem': imagem})  # Renderiza o formulário de adição de comentário se não for uma solicitação POST
+
+
 @login_required(login_url='/palavrao/loginview')
 def comentarios(request):
     comments = Comment.objects.all()
@@ -114,24 +128,45 @@ def comentarios(request):
     for comment in comments:
         comment.size = random.randint(15, 35)
     return render(request, 'palavrao/comentarios.html', {'comments': comments, 'imagem': imagem})
+
+
 @login_required(login_url='/palavrao/loginview')
 def detalhe(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     is_superuser = request.user.is_authenticated and request.user.is_superuser
     imagem = existe_imagem_perfil(request.user.id)
-    return render(request, 'palavrao/detalhe.html',{'comment':comment,'is_superuser':is_superuser, 'imagem': imagem})
+    return render(request, 'palavrao/detalhe.html',
+                  {'comment': comment, 'is_superuser': is_superuser, 'imagem': imagem})
+
 
 def check_superuser(user):
     return user.is_superuser
+
 
 @user_passes_test(check_superuser, login_url='/palavrao/loginview')
 def apagarcomentario(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     imagem = existe_imagem_perfil(request.user.id)
-    return render(request, 'palavrao/apagarcomentario.html',{'comment': comment,'imagem':imagem})
+    return render(request, 'palavrao/apagarcomentario.html', {'comment': comment, 'imagem': imagem})
+
 
 @user_passes_test(check_superuser, login_url='/palavrao/loginview')
 def confirmardeletecomment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     comment.delete()
     return comentarios(request)
+
+def like_comment(request, comentario_id):
+    comment = get_object_or_404(Comment, pk=comentario_id)
+    user = request.user
+    already_liked = Likes.objects.get(user=user, comment=comment)
+    if not already_liked.exists():
+        comment.gostos = comment.gostos + 1
+        comment.save()
+        like = Likes(user=user, comment=comment)
+        like.save()
+    else:
+        comment.gostos = comment.gostos - 1
+        comment.save()
+        Likes(user=user, comment=comment).delete()
+    return render(request, 'palavrao/comentarios.html')

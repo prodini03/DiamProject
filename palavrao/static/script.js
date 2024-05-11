@@ -25,6 +25,8 @@ const NOTIFICATION_REACH_MAX_LETTERS_PER_ROW = 'Reach Max letter per row'
 const NOTIFICATION_WORD_NOT_IN_DATABASE = 'Word not in database'
 const NOTIFICATION_GAME_OVER_GUESS_RIGHT = 'You guessed right! Game over!'
 
+let gameOver = false;
+
 const gameInitialConfig = {
     database: [],
     currentRow: 1,
@@ -207,104 +209,114 @@ const nextGuess = (game) => {
 
     return NOTIFICATION_ENTER_KEY_PRESSED
 }
-
 const checkGuess = (game) => {
-    const {database, currentLetterPosition, currentGuess, rightGuess} = game
+    const { database, currentLetterPosition, currentGuess, rightGuess } = game;
 
     if (isCurrentGuessEmpty(currentGuess)) {
-        return showNotification({message: NOTIFICATION_EMPTY_GUESS, backgroundColor: TOASTIFY_ERROR_COLOR})
+        return showNotification({ message: NOTIFICATION_EMPTY_GUESS, backgroundColor: TOASTIFY_ERROR_COLOR });
     }
 
     if (!reachMaxLetterPerRow(currentLetterPosition)) {
-        return showNotification({message: NOTIFICATION_INCOMPLETE_GUESS, backgroundColor: TOASTIFY_WARNING_COLOR})
+        return showNotification({ message: NOTIFICATION_INCOMPLETE_GUESS, backgroundColor: TOASTIFY_WARNING_COLOR });
     }
 
     if (!isGuessInDatabase(currentGuess, database)) {
-        return showNotification({message: NOTIFICATION_WORD_NOT_IN_DATABASE, backgroundColor: TOASTIFY_WARNING_COLOR})
+        return showNotification({ message: NOTIFICATION_WORD_NOT_IN_DATABASE, backgroundColor: TOASTIFY_WARNING_COLOR });
     }
 
     if (isCorrectGuess(currentGuess, rightGuess)) {
-        displayColor(game)
-        showPlayAgainButton()
-        return showNotification({message: NOTIFICATION_GAME_OVER_GUESS_RIGHT, backgroundColor: TOASTIFY_SUCCESS_COLOR})
+        displayColor(game);
+        showPlayAgainButton();
+        showNotification({ message: NOTIFICATION_GAME_OVER_GUESS_RIGHT, backgroundColor: TOASTIFY_SUCCESS_COLOR });
+        gameOver = true; // Set gameWon to true
+        return;
     }
 
-    displayColor(game)
+    displayColor(game);
 
-    return nextGuess(game)
-}
-
+    return nextGuess(game);
+};
 const onKeyPressed = (pressedKey, game) => {
     const {currentLetterPosition, currentGuess, currentRow} = game
 
     if (reachMaxAttempts(currentRow)) {
-        return showNotification({message: NOTIFICATION_REACH_MAX_ATTEMPTS, backgroundColor: TOASTIFY_ERROR_COLOR})
+        showNotification({message: NOTIFICATION_REACH_MAX_ATTEMPTS, backgroundColor: TOASTIFY_ERROR_COLOR})
+        return true; // Indicate game over
     }
 
     if (!isValidKeyPressed(pressedKey)) {
-        return showNotification({message: NOTIFICATION_INVALID_PRESSED_KEY, backgroundColor: TOASTIFY_ERROR_COLOR})
+        showNotification({message: NOTIFICATION_INVALID_PRESSED_KEY, backgroundColor: TOASTIFY_ERROR_COLOR})
+        return gameOver; // Return current game over status
     }
 
     if (isBackspaceKeyPressed(pressedKey) && !isCurrentGuessEmpty(currentGuess)) {
-        return removeLetterFromBoard(game)
-    }
-
-    if (isBackspaceKeyPressed(pressedKey) && isCurrentGuessEmpty(currentGuess)) {
-        return showNotification({
+        removeLetterFromBoard(game)
+    } else if (isBackspaceKeyPressed(pressedKey) && isCurrentGuessEmpty(currentGuess)) {
+        showNotification({
             message: NOTIFICATION_BACKSPACE_WHEN_EMPTY_GUESS,
             backgroundColor: TOASTIFY_WARNING_COLOR
         })
-    }
-
-    if (isEnterKeyPressed(pressedKey)) {
-        return checkGuess(game)
-    }
-
-    if (reachMaxLetterPerRow(currentLetterPosition)) {
-        return showNotification({
+    } else if (isEnterKeyPressed(pressedKey)) {
+        checkGuess(game)
+    } else if (reachMaxLetterPerRow(currentLetterPosition)) {
+        showNotification({
             message: NOTIFICATION_REACH_MAX_LETTERS_PER_ROW,
             backgroundColor: TOASTIFY_ERROR_COLOR
         })
+    } else {
+        displayLetterOnTheBoard(game, pressedKey)
     }
 
-    return displayLetterOnTheBoard(game, pressedKey)
+    return gameOver;
 }
 
 const onEnterButtonPressed = (game) => {
     document.querySelector('.action.enter')
-        .addEventListener('click', () => onKeyPressed('Enter', game))
+        .addEventListener('click', () => {
+            if(!gameOver) {
+                onKeyPressed('Enter', game)
+            }
+        })
 }
 
 const onEraseButtonPressed = (game) => {
     document.querySelector('.action.erase')
         .addEventListener('click', (event) => {
-            event.stopPropagation()
-            onKeyPressed('Backspace', game)
+            if(!gameOver) {
+                event.stopPropagation()
+                onKeyPressed('Backspace', game)
+            }
         })
 }
 
 const onLetterButtonPressed = (game) => {
     document.querySelectorAll('.letter').forEach((element) => {
         element.addEventListener('click', (event) => {
-            onKeyPressed(event.target.value, game)
-            element.blur()
+            if(!gameOver) {
+                onKeyPressed(event.target.value, game)
+                element.blur()
+            }
         })
     })
 }
 
 const onPlayAgainButtonPressed = (game) => {
     const buttonPlayAgain = document.querySelector('.btn')
-
     buttonPlayAgain.addEventListener('click', () => {
         resetInitialGame(game)
         resetBoardGameLetter()
         resetKeyboardLetter()
         hidePlayAgainButton()
+        gameOver=false;
     })
 }
 
 const onKeydown = (game) => {
-    document.addEventListener('keydown', (event) => onKeyPressed(event.key, game))
+    document.addEventListener('keydown', (event) => {
+        if(!gameOver) {
+            onKeyPressed(event.key, game)
+        }
+    })
 }
 
 const loadWords = async () => {
