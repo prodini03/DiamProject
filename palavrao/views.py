@@ -159,14 +159,16 @@ def confirmardeletecomment(request, comentario_id):
 def like_comment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     user = request.user
-    already_liked = Likes.objects.get(user=user, comment=comment)
-    if not already_liked.exists():
-        comment.gostos = comment.gostos + 1
+    try:
+        already_liked = Likes.objects.get(user=user, comment=comment)
+        # User already liked the comment, so unlike it
+        comment.gostos -= 1
         comment.save()
-        like = Likes(user=user, comment=comment)
-        like.save()
-    else:
-        comment.gostos = comment.gostos - 1
+        already_liked.delete()
+    except Likes.DoesNotExist:
+        # User hasn't liked the comment yet, so like it
+        comment.gostos += 1
         comment.save()
-        Likes(user=user, comment=comment).delete()
-    return render(request, 'palavrao/comentarios.html')
+        Likes.objects.create(user=user, comment=comment)
+    # Redirect back to the 'comentarios' URL using its name
+    return redirect('palavrao:comentarios')

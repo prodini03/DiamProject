@@ -44,14 +44,14 @@
 {% block content %}
     <h1>{{ comment.text }}</h1>
     <h2>{{ comment.created_at }}</h2>
-
+    <br>
     <form action="{% url 'palavrao:like_comment' comment.id %}" method="post">
         {% csrf_token %}
-       <button class="button" type="submit" style="text-align: center">Like</button>
+        <button class="button" type="submit" style="text-align: center">Like</button>
+        <br>
         <p>Total de likes: {{ comment.gostos }}</p>
     </form>
 
-    <br>
     <br>
     <br>
 
