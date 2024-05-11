@@ -83,10 +83,14 @@ def dados_pessoais(request):
     user = request.user
     client = user.client
     imagem = existe_imagem_perfil(request.user.id)
+    total_likes = Likes.objects.filter(user=user).count()
+    user_comments = Comment.objects.filter(user=client)
     context = {
         'user': user,
         'client': client,
-        'imagem': imagem
+        'imagem': imagem,
+        'total_likes': total_likes,
+        'user_comments': user_comments
     }
     return render(request, 'palavrao/dados_pessoais.html', context)
 
@@ -161,14 +165,11 @@ def like_comment(request, comentario_id):
     user = request.user
     try:
         already_liked = Likes.objects.get(user=user, comment=comment)
-        # User already liked the comment, so unlike it
         comment.gostos -= 1
         comment.save()
         already_liked.delete()
     except Likes.DoesNotExist:
-        # User hasn't liked the comment yet, so like it
         comment.gostos += 1
         comment.save()
         Likes.objects.create(user=user, comment=comment)
-    # Redirect back to the 'comentarios' URL using its name
     return redirect('palavrao:comentarios')
