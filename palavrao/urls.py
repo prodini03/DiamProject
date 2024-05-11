@@ -16,5 +16,5 @@ urlpatterns = [
     path('detalhe/<int:comentario_id>', views.detalhe, name='detalhe'),
     path('confirmardeletecomment/<int:comentario_id>', views.confirmardeletecomment, name='confirmardeletecomment'),
     path('apagarcomentario/<int:comentario_id>', views.apagarcomentario, name='apagarcomentario'),
-    path('like_comment/<int:comentario_id>/', views.like_comment, name='like_comment'),
+    path('like_comment/<int:comentario_id>', views.like_comment, name='like_comment'),
 ]
