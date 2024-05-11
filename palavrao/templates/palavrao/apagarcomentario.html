@@ -45,6 +45,7 @@ Parabens apagaste com sucesso o comentario.
     <form action="{% url 'palavrao:confirmardeletecomment' comment.id %}" method="post">
     {% csrf_token %}
         <br>
+        <br>
     <button class="button" type="submit" style="text-align: center">Voltar aos Comentários</button>
 </form>
 {% endblock %}

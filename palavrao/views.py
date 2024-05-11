@@ -120,7 +120,7 @@ def add_comment(request):
         comment.save()
 
         comments = Comment.objects.all()
-        return comentarios(request)  # Redireciona para a página de comentários após adicionar o comentário
+        return redirect('palavrao:comentarios')  # Redireciona para a página de comentários após adicionar o comentário
     return render(request, 'palavrao/add_comment.html',
                   {'imagem': imagem})  # Renderiza o formulário de adição de comentário se não for uma solicitação POST
 
@@ -158,7 +158,7 @@ def apagarcomentario(request, comentario_id):
 def confirmardeletecomment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     comment.delete()
-    return comentarios(request)
+    return redirect('palavrao:comentarios')
 
 def like_comment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)

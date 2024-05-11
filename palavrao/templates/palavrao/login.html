@@ -47,6 +47,7 @@
 
 <div style="text-align: center;">
     {% block content %}
+
         <br>
         <form action="{% url 'palavrao:login' %}" method="post">
             {% csrf_token %}
@@ -56,8 +57,10 @@
             <br>
             <input type="submit" value="Login"/>
         </form>
+
     {% endblock %}
 </div>
+
 
 <script>
     function w3_open() {

@@ -43,12 +43,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="comments-container" id="comments-container">
+<div class="comments-container" id="comments-container">
         {% for comment in comments %}
-            <p><a href="{% url 'palavrao:detalhe' comment.id %}" class="comment" style="font-size: {{ comment.size }}px;">{{ comment.text }}</a></p>
+            <p><a href="{% url 'palavrao:detalhe' comment.id %}" class="comment"
+                  style="font-size: {{ comment.size }}px;">{{ comment.text }}</a></p>
+        {% empty %}
+            <p>Nenhum comentário encontrado.</p>
         {% endfor %}
     </div>
 {% endblock %}
-
 </body>
 </html>
