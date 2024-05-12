@@ -171,10 +171,23 @@ main {
 .btn:active::before {
     scale: 0.7;
 }
-h1, h2, h3, h4, h5, h6 {
-                        font-family: "Karma", sans-serif;
-                    }
 
-                    .w3-bar-block .w3-bar-item {
-                        padding: 20px;
-                    }
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Karma", sans-serif;
+}
+
+.w3-bar-block .w3-bar-item {
+    padding: 20px;
+}
+.comment-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comments-container p {
+    margin: 0;
+}

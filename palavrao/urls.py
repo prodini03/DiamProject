@@ -1,5 +1,6 @@
 from django.urls import include, path
 from . import views
+from .views import LoginView
 
 app_name = 'palavrao'
 
@@ -17,5 +18,6 @@ urlpatterns = [
     path('confirmardeletecomment/<int:comentario_id>', views.confirmardeletecomment, name='confirmardeletecomment'),
     path('apagarcomentario/<int:comentario_id>', views.apagarcomentario, name='apagarcomentario'),
     path('like_comment/<int:comentario_id>', views.like_comment, name='like_comment'),
-    path('api/palavrao', views.palavrao),
+    path('login/', LoginView.as_view()),
+    path('api/comments/', views.comments),
 ]

@@ -12,6 +12,9 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import authenticate
 import random
 from django.contrib.auth.decorators import login_required
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
+
 from palavrao.models import Client, Comment, Likes
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -180,8 +183,19 @@ def like_comment(request, comentario_id):
 
 
 @api_view(['GET'])
-def palavrao(request):
-    client_list = Client.objects.all()
-    serializer = ClientSerializer(client_list, many=True)
+def comments(request):
+    question_list = Comment.objects.all()
+    serializer = CommentSerializer(question_list, many=True)
     return Response(serializer.data)
 
+
+class LoginView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            token, _ = Token.objects.get_or_create(user=user)
+            return JsonResponse({'token': token.key})
+        else:
+            return JsonResponse({'error': 'Credenciais inválidas'}, status=400)
