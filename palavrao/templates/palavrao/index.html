@@ -42,13 +42,13 @@
 
     {% if not verificar %}
         <img src="{% static 'media/anonimo.png' %}" id="anonimo" width="150" height="150" alt="Imagem de perfil"
-             style="position: absolute; top: 10px; right: 10px;">
+             style="position: absolute; top: 20px; right: 200px; border: 2px solid #000;">
     {% elif imagem %}
         <img src="{% static 'media/' %}{{ request.user.id }}.jpg" id="pfp" width="150" height="150"
-             alt="Imagem de perfil" style="position: absolute; top: 10px; right: 10px;">
+             alt="Imagem de perfil" style="position: absolute; top: 20px; right: 200px; border: 2px solid #000;">
     {% else %}
         <img src="{% static 'media/default.png' %}" id="default" width="150" height="150" alt="Imagem de perfil"
-             style="position: absolute; top: 10px; right: 10px;">
+             style="position: absolute; top: 20px; right: 200px; border: 2px solid #000;">
     {% endif %}
 
     <main>

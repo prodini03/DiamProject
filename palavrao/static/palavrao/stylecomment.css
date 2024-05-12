@@ -105,17 +105,19 @@
   top: 105%;
 }
 
-.comments-container {
-    display: grid; /* Use CSS Grid layout */
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid with minimum column width */
-    grid-auto-rows: 100px; /* Set row height */
-    grid-gap: 10px; /* Set gap between grid items */
-}
-
 /* CSS for individual comments */
+/*.comment {
+    background-color: #f0f0f0; !* Example background color *!
+    padding: 10px; !* Add padding *!
+    border-radius: 5px; !* Add border radius for rounded corners *!
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); !* Add box shadow for depth *!
+}*/
 .comment {
-    background-color: #f0f0f0; /* Example background color */
-    padding: 10px; /* Add padding */
-    border-radius: 5px; /* Add border radius for rounded corners */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+    font-size: 16px; /* default font size */
+    color: #333; /* default text color */
+    text-decoration: none; /* remove underline */
+    transition: color 0.3s ease; /* smooth color transition on hover */
+}
+.comment:hover {
+  color: #666;
 }
