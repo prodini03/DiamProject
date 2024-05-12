@@ -19,13 +19,13 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from .serializers import *
 
-@api_view(['GET', 'POST'])
+
 def index(request):
     imagem = existe_imagem_perfil(request.user.id)
     verificar = verificar_login(request)
     return render(request, 'palavrao/index.html', {'imagem': imagem, 'verificar': verificar})
 
-@api_view(['GET', 'POST'])
+
 def loginview(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -40,11 +40,11 @@ def loginview(request):
     else:
         return render(request, 'palavrao/login.html')
 
-@api_view(['GET', 'POST'])
+
 def errologin(request):
     render(request, 'palavrao/errologin.html')
 
-@api_view(['GET', 'POST'])
+
 def criarconta(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -106,7 +106,7 @@ def verificar_login(request):
         # O usuário não está logado, redirecione para a página de login
         return False
 
-@api_view(['GET', 'POST'])
+
 def logoutview(request):
     logout(request)
     return render(request, 'palavrao/logoutview.html')
@@ -177,3 +177,17 @@ def like_comment(request, comentario_id):
         comment.save()
         Likes.objects.create(user=user, comment=comment)
     return redirect('palavrao:comentarios')
+
+@api_view(['GET','POST'])
+def index(request):
+    if request.method == 'GET':  # (3)
+        client_list = Client.objects.all()
+        serializer = ClientSerializer(client_list, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':  # (3)
+        serializer = ClientSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(status=status.HTTP_201_CREATED)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)

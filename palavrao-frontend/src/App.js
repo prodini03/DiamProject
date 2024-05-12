@@ -1,25 +1,20 @@
 import React, { useState, useEffect  } from 'react';
 import './App.css';
 import Header from './Header';
+import axios from "axios";
 
 function App() {
-    const [data, setData] = useState(null);
-
-    useEffect(() => {
-        fetch('/palavrao/serializable')
-            .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching data:', error));
+    const URL_CLIENTS = "http://localhost:8000/votacao/api/questions/"; // (1)
+    const [clientList, setClientList] = useState([]); // (2)
+    const getClients = () => { // (3)
+        axios.get(URL_CLIENTS).then( (request) => {setClientList(request.data)});
+    };
+    useEffect( () => { //(4)
+        getClients();
     }, []);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <>
-            <h1>{data.imagem}</h1>
-            <p>{data.verificar}</p>
             <Header/>
             <Content/>
         </>
