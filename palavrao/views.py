@@ -178,16 +178,10 @@ def like_comment(request, comentario_id):
         Likes.objects.create(user=user, comment=comment)
     return redirect('palavrao:comentarios')
 
-@api_view(['GET','POST'])
-def index(request):
-    if request.method == 'GET':  # (3)
-        client_list = Client.objects.all()
-        serializer = ClientSerializer(client_list, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':  # (3)
-        serializer = ClientSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(status=status.HTTP_201_CREATED)
 
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def palavrao(request):
+    client_list = Client.objects.all()
+    serializer = ClientSerializer(client_list, many=True)
+    return Response(serializer.data)
+
