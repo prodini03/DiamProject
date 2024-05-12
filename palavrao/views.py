@@ -12,17 +12,20 @@ from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import authenticate
 import random
 from django.contrib.auth.decorators import login_required
-
 from palavrao.models import Client, Comment, Likes
 from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from .serializers import *
 
-
+@api_view(['GET', 'POST'])
 def index(request):
     imagem = existe_imagem_perfil(request.user.id)
     verificar = verificar_login(request)
     return render(request, 'palavrao/index.html', {'imagem': imagem, 'verificar': verificar})
 
-
+@api_view(['GET', 'POST'])
 def loginview(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -37,11 +40,11 @@ def loginview(request):
     else:
         return render(request, 'palavrao/login.html')
 
-
+@api_view(['GET', 'POST'])
 def errologin(request):
     render(request, 'palavrao/errologin.html')
 
-
+@api_view(['GET', 'POST'])
 def criarconta(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -103,7 +106,7 @@ def verificar_login(request):
         # O usuário não está logado, redirecione para a página de login
         return False
 
-
+@api_view(['GET', 'POST'])
 def logoutview(request):
     logout(request)
     return render(request, 'palavrao/logoutview.html')
@@ -159,6 +162,7 @@ def confirmardeletecomment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)
     comment.delete()
     return redirect('palavrao:comentarios')
+
 
 def like_comment(request, comentario_id):
     comment = get_object_or_404(Comment, pk=comentario_id)

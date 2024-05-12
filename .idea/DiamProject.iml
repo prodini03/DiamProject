@@ -16,12 +16,8 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (.venv)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jquery-3.6.0" level="application" />
-    <orderEntry type="library" name="toastr.js" level="application" />
-    <orderEntry type="library" name="animate.css" level="application" />
-    <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="toastify-js" level="application" />
     <orderEntry type="library" name="toastify-js" level="application" />
     <orderEntry type="library" name="w3" level="application" />

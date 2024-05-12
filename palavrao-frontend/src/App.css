@@ -1,0 +1,173 @@
+/* App.css */
+.header {
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 90px;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Steelfish Rg', 'helvetica neue', helvetica, arial, sans-serif;
+    font-weight: 800;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    text-align: center;
+}
+
+:root {
+    --bg: #fdfaf2;
+    --yellow: #F9FF00;
+    --white: #fff;
+    --border-color: #585858;
+
+    --notification-green-text: #2B5028;
+    --notification-green-bg: #538D4E;
+
+    --notification-red-text: #5F0F1D;
+    --notification-red-bg: #BA4747;
+
+    --letter-green-bg: #538D4E;
+    --letter-yellow-bg: #B59F3B;
+    --letter-gray-bg: #585858;
+
+    --keyboard-gray-light: #818384;
+    --keyboard-gray-dark: #585858;
+}
+
+body {
+    background: var(--bg);
+}
+
+main {
+    margin: 85px auto 0;
+    max-width: 992px;
+}
+
+/* Board */
+.board-game {
+    margin: 0 auto 0;
+    width: 330px;
+}
+
+.board-game .row {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(5, 62px);
+    height: 62px;
+    margin-bottom: 5px;
+}
+
+.board-game .letter {
+    border: 1px solid var(--border-color);
+    color: #000;
+}
+
+.board-game .letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    text-transform: capitalize;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Keyboard */
+.keyboard {
+    margin: 50px auto 0;
+}
+
+.keyboard .row {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.keyboard .letter,
+.keyboard .action {
+    align-items: center;
+    background: var(--keyboard-gray-light);
+    cursor: pointer;
+    display: flex;
+    font-size: 22px;
+    height: 58px;
+    justify-content: center;
+    transition: filter 0.2s;
+    width: 43px;
+    border-style: hidden;
+    color: #dddddd;
+}
+
+.keyboard .letter:hover,
+.keyboard .action:hover {
+    filter: brightness(0.8);
+}
+
+.keyboard .enter {
+    font-size: 17px;
+    width: 83px;
+}
+
+.play-again {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.btn {
+    position: relative;
+    width: 120px;
+    height: 40px;
+    background-color: #000;
+    display: none;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+    padding: 12px;
+    gap: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: auto;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -4px;
+    top: -1px;
+    margin: auto;
+    width: 128px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(#585858, #585858);
+    z-index: -10;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#585858, #585858);
+    transform: translate3d(0, 0, 0) scale(0.95);
+    filter: blur(20px);
+}
+
+.btn:hover::after {
+    filter: blur(30px);
+}
+
+.btn:hover::before {
+    transform: rotate(-180deg);
+}
+
+.btn:active::before {
+    scale: 0.7;
+}

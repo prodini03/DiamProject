@@ -17,4 +17,8 @@ urlpatterns = [
     path('confirmardeletecomment/<int:comentario_id>', views.confirmardeletecomment, name='confirmardeletecomment'),
     path('apagarcomentario/<int:comentario_id>', views.apagarcomentario, name='apagarcomentario'),
     path('like_comment/<int:comentario_id>', views.like_comment, name='like_comment'),
+    path('api/index', views.index),
+    path('api/login', views.loginview),
+    path('api/logout', views.logoutview),
+    path('api/errologin', views.errologin),
 ]
