@@ -42,7 +42,7 @@ const toastifyDefaultConfig = {
     gravity: "top",
     position: "center",
     stopOnFocus: true,
-    style: {
+    style:{
         boxShadow: "1px 3px 10px 0px #585858"
     }
 }
@@ -139,7 +139,7 @@ const reachMaxAttempts = (currentRow) => {
 }
 
 const applyColor = (element, color) => {
-    element.style.backgroundColor = color
+    element.style.background = color
 }
 
 const displayColor = (game) => {
